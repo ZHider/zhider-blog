@@ -1,0 +1,792 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.webp">
+  <link rel="icon" href="/img/icon.webp">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ZHider">
+  <meta name="keywords" content="ivand,zhider,zhiders blog,伊万德">
+  
+    <meta name="description" content="中文EnglishEuskara Two Mental Models: VBA and WebA mental model is the picture in your head of “what this system is.” When a problem comes up, the picture you see first decides how you make decisions. M">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KUDEA-H-web-feasibility-en">
+<meta property="og:url" content="https://blog.ivandspc.top/2026/10-21-KUDEA-H-web-feasibility-en/index.html">
+<meta property="og:site_name" content="ZHider&#39;s Blog">
+<meta property="og:description" content="中文EnglishEuskara Two Mental Models: VBA and WebA mental model is the picture in your head of “what this system is.” When a problem comes up, the picture you see first decides how you make decisions. M">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-20T16:15:55.000Z">
+<meta property="article:modified_time" content="2026-10-20T16:23:21.043Z">
+<meta property="article:author" content="ZHider">
+<meta property="article:tag" content="ivand">
+<meta property="article:tag" content="zhider">
+<meta property="article:tag" content="zhiders blog">
+<meta property="article:tag" content="伊万德">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>KUDEA-H-web-feasibility-en - ZHider&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.ivandspc.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>伊万德的小窝</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="KUDEA-H-web-feasibility-en"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-10-21 00:15" pubdate>
+          2026年10月21日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          93 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">KUDEA-H-web-feasibility-en</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><a href="../10-21-KUDEA-H-web-feasibility-cn">中文</a><br><a href="../10-21-KUDEA-H-web-feasibility-en">English</a><br><a href="../10-21-KUDEA-H-web-feasibility">Euskara</a></p>
+<h1 id="Two-Mental-Models-VBA-and-Web"><a href="#Two-Mental-Models-VBA-and-Web" class="headerlink" title="Two Mental Models: VBA and Web"></a>Two Mental Models: VBA and Web</h1><p>A mental model is the picture in your head of “what this system is.” When a problem comes up, the picture you see first decides how you make decisions. Many decisions in your business plan are made from the VBA picture, and they go off track when applied to the web. Below are the two pictures, then a comparison against specific statements in your plan.</p>
+<h2 id="1-The-VBA-Mental-Model"><a href="#1-The-VBA-Mental-Model" class="headerlink" title="1. The VBA Mental Model"></a>1. The VBA Mental Model</h2><p>The system in your head is <strong>one Excel file</strong>.</p>
+<ul>
+<li>Where the file is, the system is. If the file is on Zhang’s computer, the system is on Zhang’s computer.</li>
+<li>Double-click the file, and the system starts working. Close the file, and the system stops.</li>
+<li>The interface (worksheets), the rules (macros), and the data (cells) all live inside this one file.</li>
+<li>To give it to another center, copy the file over. The two copies are then independent and do not affect each other.</li>
+<li>Upgrading means sending a new file, and the user overwrites the old one.</li>
+<li>Backing up means copying the file.</li>
+<li>If two people open the same file at the same time, they conflict. So usually people take turns, or put it on a shared drive and open it at different times.</li>
+<li>When something goes wrong, open the file and look.</li>
+</ul>
+<p>This picture is simple and direct, and your VBA version succeeded by following it.</p>
+<h2 id="2-The-Web-Mental-Model-Best-Practice"><a href="#2-The-Web-Mental-Model-Best-Practice" class="headerlink" title="2. The Web Mental Model (Best Practice)"></a>2. The Web Mental Model (Best Practice)</h2><p>The system in your head should be <strong>a service that is always running, plus a database</strong>.</p>
+<ul>
+<li>The service runs on a machine that stays on. The program is always running, waiting for users to access it.</li>
+<li>A user opens a URL in a browser, which means accessing this service. Closing the browser does not stop the service.</li>
+<li>Data lives in the database, separate from the service program. Every time the program does something, it reads from and writes to the database.</li>
+<li>Multiple users accessing at the same time is the normal state. The program must handle them simultaneously, and each person’s data must not interfere with others.</li>
+<li>Upgrading means replacing the program on that machine. The next time users refresh the browser, they see the new version, and the data does not move.</li>
+<li>Backing up means backing up the database and the attachments, and making sure the records in the database match the files in the attachments folder.</li>
+<li>When something goes wrong, look at the logs on the server.</li>
+<li>Someone must always ensure that machine stays on, the program keeps running, the URL is reachable, and backups are being made.</li>
+</ul>
+<p>The key point of this picture: <strong>the system is something that runs continuously, not a file that only exists when opened.</strong></p>
+<h2 id="3-The-Same-Question-Answered-by-Two-Mental-Models"><a href="#3-The-Same-Question-Answered-by-Two-Mental-Models" class="headerlink" title="3. The Same Question, Answered by Two Mental Models"></a>3. The Same Question, Answered by Two Mental Models</h2><table>
+<thead>
+<tr>
+<th>Question</th>
+<th>VBA mental model</th>
+<th>Web mental model</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Where is the system</td>
+<td>In a file</td>
+<td>On a machine that stays on</td>
+</tr>
+<tr>
+<td>When does the system exist</td>
+<td>When the file is open</td>
+<td>All the time</td>
+</tr>
+<tr>
+<td>Where is the data</td>
+<td>In the file, together with the code</td>
+<td>In the database, separate from the code</td>
+</tr>
+<tr>
+<td>How to give it to another center</td>
+<td>Copy the file</td>
+<td>Give them a URL and let them log in</td>
+</tr>
+<tr>
+<td>How to upgrade</td>
+<td>Send a new file</td>
+<td>Replace the program on the server, users refresh and see it</td>
+</tr>
+<tr>
+<td>How to back up</td>
+<td>Copy the file</td>
+<td>Back up the database and attachments, keep them consistent</td>
+</tr>
+<tr>
+<td>How many can use it at once</td>
+<td>One, or take turns</td>
+<td>Designed for many at once</td>
+</tr>
+<tr>
+<td>Who to ask when something breaks</td>
+<td>The user opens the file and looks</td>
+<td>Someone has to manage the server and the program</td>
+</tr>
+<tr>
+<td>Who maintains it</td>
+<td>Each user manages their own file</td>
+<td>Someone dedicated has to manage the server</td>
+</tr>
+</tbody></table>
+<h2 id="4-Which-Statements-in-Your-Plan-Still-Use-the-VBA-Mental-Model"><a href="#4-Which-Statements-in-Your-Plan-Still-Use-the-VBA-Mental-Model" class="headerlink" title="4. Which Statements in Your Plan Still Use the VBA Mental Model"></a>4. Which Statements in Your Plan Still Use the VBA Mental Model</h2><p>A few statements in your plan need a different way of thinking when moved to the web:</p>
+<p><strong>“One program for one center, 50 programs 50 centers.”</strong><br>This is the copy-the-file thinking from VBA. On the web, 50 centers can be 50 separate services, or 1 service managing 50 centers. These two differ a lot in maintenance workload. Your current statement assumes the first, but your plan has not compared the two.</p>
+<p><strong>“In case of need we will connect with the remote machine.”</strong><br>This is the VBA “go to that machine and open the file” thinking. On the web, troubleshooting usually starts with logs and monitoring, and logging into the server is the last resort, not the daily practice.</p>
+<p><strong>“Data is never shared between different centers neither to us by web.”</strong><br>The requirement is reasonable. But in the web mental model, it translates to: data sits in the server-side database, each center can only see its own data, and you as the operator cannot see it either. That is a tenant-isolation question, not a “where is the data stored” question.</p>
+<p><strong>“The web version is just swapping VBA for Python, logic unchanged.”</strong><br>In the web mental model, business logic goes into the server-side program, data goes into the database, and the interface goes into the browser. These are three separate pieces, unlike VBA where all of it lives in one file.</p>
+<h2 id="5-Three-Concrete-Points-of-the-Mental-Shift"><a href="#5-Three-Concrete-Points-of-the-Mental-Shift" class="headerlink" title="5. Three Concrete Points of the Mental Shift"></a>5. Three Concrete Points of the Mental Shift</h2><ol>
+<li><strong>From “file” to “service.”</strong> The question you ask from now on changes from “where is this file” to “which machine is this service running on, and who is managing it.”</li>
+<li><strong>From “exists only when opened” to “always exists.”</strong> The service needs someone to keep it alive 24&#x2F;7. This does not exist in VBA, because a file that is not open uses no resources.</li>
+<li><strong>From “data lives with the code” to “data lives in the database.”</strong> Backup, restore, upgrade, and migration all revolve around the database, not around a file.</li>
+</ol>
+<p>These three shifts map directly onto the four difficulties in your plan: what the monthly fee sells, how many centers one person can manage, how to calculate costs, and whether to keep the multi-entity goal. Once the mental model shifts, these four questions become much easier to answer.</p>
+<h1 id="KUDEA-H-Web-Version-Business-Plan-A-Feasibility-Review"><a href="#KUDEA-H-Web-Version-Business-Plan-A-Feasibility-Review" class="headerlink" title="KUDEA-H Web Version Business Plan: A Feasibility Review"></a>KUDEA-H Web Version Business Plan: A Feasibility Review</h1><blockquote>
+<p>This is a feasibility check of a business plan, not a technical review. The goal is to help you see what difficulties the plan will meet when it is put into practice, so that the plan itself stands on firmer ground.</p>
+</blockquote>
+<h2 id="The-Most-Important-Point-First"><a href="#The-Most-Important-Point-First" class="headerlink" title="The Most Important Point First"></a>The Most Important Point First</h2><p>Code is not your risk. AI can write it. Your actual money and effort go elsewhere: deployment, security, backups, day-to-day operations, customer support. Whether a software business plan holds up depends mainly on whether it can serve dozens or hundreds of customers reliably over the long term, and whether it can pay for the person who maintains it.</p>
+<p>Your VBA version already runs in two places and has received letters of interest. That is a successful project. The web version is one step forward from that base. The difficulties below do not reject your plan. They are questions the plan has to answer in order to hold up at the scale of 50 to 150 centers.</p>
+<h2 id="1-Four-Difficulties-the-Plan-Must-Answer-First"><a href="#1-Four-Difficulties-the-Plan-Must-Answer-First" class="headerlink" title="1. Four Difficulties the Plan Must Answer First"></a>1. Four Difficulties the Plan Must Answer First</h2><h3 id="Difficulty-1-What-the-Monthly-Fee-Is-Selling"><a href="#Difficulty-1-What-the-Monthly-Fee-Is-Selling" class="headerlink" title="Difficulty 1: What the Monthly Fee Is Selling"></a>Difficulty 1: What the Monthly Fee Is Selling</h3><p>You plan to charge monthly. The customer will ask: the software is installed on my own computer, why should I pay every month.</p>
+<p>If the monthly fee sells the software itself, that question is hard to answer. If it sells ongoing service, such as installation, upgrades, backups, and someone to call when something breaks, then you have committed to long-term operations. Operations is the heaviest and most easily underestimated cost in this plan.</p>
+<p>If this position is unclear, the revenue, staffing, and cost figures that follow cannot be calculated accurately. Please state first: does the monthly fee correspond to a software license, or to hosting plus support service.</p>
+<h3 id="Difficulty-2-Local-Deployment-Costs-More-to-Operate-Than-VBA-and-One-Person-Can-Only-Manage-So-Many-Centers"><a href="#Difficulty-2-Local-Deployment-Costs-More-to-Operate-Than-VBA-and-One-Person-Can-Only-Manage-So-Many-Centers" class="headerlink" title="Difficulty 2: Local Deployment Costs More to Operate Than VBA, and One Person Can Only Manage So Many Centers"></a>Difficulty 2: Local Deployment Costs More to Operate Than VBA, and One Person Can Only Manage So Many Centers</h3><p>You prioritize local deployment, with data never uploaded. That requirement is reasonable. But local deployment does not mean simple operations. A concrete comparison:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>VBA version</th>
+<th>Python web version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Backup</td>
+<td>Copy the Excel file</td>
+<td>Back up database, attachments, and configuration together, and make sure the three match</td>
+</tr>
+<tr>
+<td>Restore</td>
+<td>Copy the file back</td>
+<td>Stop the service, restore the database and attachments, check configuration, restart, verify</td>
+</tr>
+<tr>
+<td>Upgrade</td>
+<td>Send a new .xlsm file</td>
+<td>Pull code, install dependencies, run database migrations, restart, verify</td>
+</tr>
+<tr>
+<td>Rollback</td>
+<td>Copy the old file back</td>
+<td>Roll back code, dependencies, and database structure together</td>
+</tr>
+</tbody></table>
+<p>VBA operations are file operations, and customers can learn them. Python web operations require understanding databases, dependencies, service processes, and migrations. That needs a dedicated person.</p>
+<p>Your plan says INNSOC will provide one person. Please work out clearly: how many centers can this person manage at the same time. 10, 30, or 50. That number is the scale ceiling of the plan.</p>
+<h3 id="Difficulty-3-Operating-Cost-Grows-With-the-Number-of-Centers-and-Revenue-May-Not-Keep-Up"><a href="#Difficulty-3-Operating-Cost-Grows-With-the-Number-of-Centers-and-Revenue-May-Not-Keep-Up" class="headerlink" title="Difficulty 3: Operating Cost Grows With the Number of Centers, and Revenue May Not Keep Up"></a>Difficulty 3: Operating Cost Grows With the Number of Centers, and Revenue May Not Keep Up</h3><p>Your calculation is: 50 centers times a small monthly fee pays for one person. Under local deployment, the reality is:</p>
+<ul>
+<li>Each center has its own separate system. Fixing one bug means connecting to 50 machines remotely and updating them one by one.</li>
+<li>One remote troubleshooting session takes minutes to hours. Multiply by 50 centers and by how often it happens, and one person is quickly overwhelmed.</li>
+<li>That person is busy with operations and has no time to develop the next version. This directly conflicts with your stated goal of using revenue to fund web version development.</li>
+</ul>
+<p>The plan should state clearly: at 50 centers, what is the total monthly revenue. What does it cost per year to pay one person, including server, domain, and travel. In which month does revenue cover cost. If these numbers cannot be calculated, “revenue pays for the person” is only an assumption.</p>
+<h3 id="Difficulty-4-Local-Deployment-Means-Giving-Up-Multi-Entity-and-This-Is-an-Explicit-Trade-off"><a href="#Difficulty-4-Local-Deployment-Means-Giving-Up-Multi-Entity-and-This-Is-an-Explicit-Trade-off" class="headerlink" title="Difficulty 4: Local Deployment Means Giving Up Multi-Entity, and This Is an Explicit Trade-off"></a>Difficulty 4: Local Deployment Means Giving Up Multi-Entity, and This Is an Explicit Trade-off</h3><p>Your original proposal said that later you would switch to Postgres to support multi-entity access. But one program per center, with data not shared, means 50 to 150 centers are 50 to 150 separate systems, not one system that can scale. The multi-entity goal is in practice abandoned.</p>
+<p>There are good reasons for this. Data security is simpler, and GDPR responsibility is simpler. But the plan should state this trade-off explicitly: what you are building is a software product serving many independent customers, not a platform. This will affect what funders and investors expect in terms of scalability.</p>
+<h2 id="2-Reminders-Along-the-Way"><a href="#2-Reminders-Along-the-Way" class="headerlink" title="2. Reminders Along the Way"></a>2. Reminders Along the Way</h2><ul>
+<li>Functional parity: VBA contains many practices that are not written down, such as how default values are filled, what basis reports use, and how abnormal data is handled. These are easily lost in a rewrite. Run the old and new systems in parallel at the two existing sites for a while before rolling out to interested customers.</li>
+<li>Scaling upgrades and bug fixes: how to update one bug across 50 machines is a process question. The plan should reserve an approach, such as automatic updates or centralized hosting.</li>
+<li>Data migration format differences: each center’s Excel may look different because of local changes. The migration script has to handle these differences. During the pilot period, try to keep the VBA data structure consistent.</li>
+</ul>
+<h2 id="3-If-Scale-Becomes-Unmanageable-Later-A-Common-Commercial-Approach"><a href="#3-If-Scale-Becomes-Unmanageable-Later-A-Common-Commercial-Approach" class="headerlink" title="3. If Scale Becomes Unmanageable Later: A Common Commercial Approach"></a>3. If Scale Becomes Unmanageable Later: A Common Commercial Approach</h2><p>Data not being uploaded is a reasonable requirement, and local deployment as the first choice is fine. But if local operations cannot support more than 100 centers, a common commercial approach is centralized hosting with tenant isolation, where each center’s data is strictly separated, plus a data processing agreement promising not to touch the data. This keeps data from mixing while also allowing scale.</p>
+<p>Whether to take this path depends on whether the scale ceiling in Difficulty 2 actually becomes a bottleneck. There is no need to decide now, but it can be written into the plan as a future path.</p>
+<h2 id="4-Handle-These-After-the-Four-Difficulties-Have-Answers"><a href="#4-Handle-These-After-the-Four-Difficulties-Have-Answers" class="headerlink" title="4. Handle These After the Four Difficulties Have Answers"></a>4. Handle These After the Four Difficulties Have Answers</h2><p>All of the following should wait until the four difficulties in Section 1 have conclusions. Discussing them now is premature.</p>
+<ul>
+<li>Backup plus restore testing. Actually restore once on a regular schedule, and confirm the data is complete and the system runs. A backup that has never been tested is no backup.</li>
+<li>One-command upgrade, with the ability to roll back to the previous version.</li>
+<li>Monitoring and logs: is the service alive, and can errors be found.</li>
+<li>Lean toward PaaS hosting, such as Render, Railway, or PythonAnywhere. They provide certificates, automatic deployment, managed backups, and one-click rollback, turning operations that need a technical person into a few clicks. The cost is higher fees and data stored with a third party.</li>
+<li>Put server, domain, and labor hours into the budget.</li>
+<li>Choose between Django and Flask. Django comes with an admin panel, authentication, permissions, and form validation, which is less work for a non-professional developer. Suggest the maintainer spend half a day going through the official Django tutorial before deciding.</li>
+</ul>
+<h2 id="Summary-in-One-Paragraph"><a href="#Summary-in-One-Paragraph" class="headerlink" title="Summary in One Paragraph"></a>Summary in One Paragraph</h2><p>Whether the plan holds up depends mainly on four business questions:</p>
+<ol>
+<li>Does the monthly fee sell software or service.</li>
+<li>Under local deployment, how many centers can one person manage.</li>
+<li>Does the revenue from 50 centers cover the cost of the person and the infrastructure.</li>
+<li>Do you accept giving up multi-entity and building a software product for many independent customers.</li>
+</ol>
+<p>If these four questions have answers, the plan stands. If they do not, problems will appear in operations and cost once scale grows. Everything else is execution detail, to be handled after these four are settled.</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>KUDEA-H-web-feasibility-en</div>
+      <div>https://blog.ivandspc.top/2026/10-21-KUDEA-H-web-feasibility-en/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>ZHider</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年10月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/gitalk/1.8.0/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"Ov23lieyDHXPGmHlFL2N","clientSecret":"5b47849bde29359d495aa6a22ed4f46916008441","repo":"zhider-blog","owner":"ZHider","admin":["ZHider"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cloudflare-cors-anywhere.littlehider.workers.dev/?https://github.com/login/oauth/access_token"},
+          {
+            id: 'cc96a0a0c6e3a49a4a6a6d40f2314b17'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

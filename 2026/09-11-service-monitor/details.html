@@ -1,0 +1,134 @@
+<div class="row svcmon-details">
+  <div class="col-6 col-md-3 mb-2">
+    <div class="svcmon-tile">
+      <div class="svcmon-tile-label">总耗时（Resource Timing）</div>
+      <div id="dtTotal" class="svcmon-tile-value">—</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3 mb-2">
+    <div class="svcmon-tile">
+      <div class="svcmon-tile-label">首字节 TTFB</div>
+      <div id="dtTtfb" class="svcmon-tile-value">—</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3 mb-2">
+    <div class="svcmon-tile">
+      <div class="svcmon-tile-label">DNS 解析</div>
+      <div id="dtDns" class="svcmon-tile-value">—</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3 mb-2">
+    <div class="svcmon-tile">
+      <div class="svcmon-tile-label">TCP 连接</div>
+      <div id="dtTcp" class="svcmon-tile-value">—</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3 mb-2">
+    <div class="svcmon-tile">
+      <div class="svcmon-tile-label">TLS 握手</div>
+      <div id="dtTls" class="svcmon-tile-value">—</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3 mb-2">
+    <div class="svcmon-tile">
+      <div class="svcmon-tile-label">内容下载</div>
+      <div id="dtDownload" class="svcmon-tile-value">—</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3 mb-2">
+    <div class="svcmon-tile">
+      <div class="svcmon-tile-label">传输大小</div>
+      <div id="dtSize" class="svcmon-tile-value">—</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3 mb-2">
+    <div class="svcmon-tile">
+      <div class="svcmon-tile-label">协议 / 读取模式</div>
+      <div id="dtProto" class="svcmon-tile-value">—</div>
+    </div>
+  </div>
+</div>
+
+<div id="dtNote" class="svcmon-note mb-3">等待首次探测结果。</div>
+
+<script type="module">
+import { DEFAULT_SERVICE_ID } from "./services.js";
+
+document.addEventListener("DOMContentLoaded", function () {
+  var currentId = DEFAULT_SERVICE_ID;
+  var latest = null;
+  var probing = false;
+
+  function set(id, text) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+
+  function ms(value) {
+    return value > 0 ? Math.round(value * 10) / 10 + " ms" : "—";
+  }
+
+  function sizeText(timing) {
+    return timing.transferSize > 0 ? timing.transferSize + " B" : "未暴露";
+  }
+
+  function protoText(result) {
+    var protocol = result.timing.protocol ? result.timing.protocol : "未暴露";
+    var mode = result.mode === "cors" ? "CORS 可读" : "no-cors 不透明";
+    return protocol + " · " + mode;
+  }
+
+  function noteText() {
+    if (probing) return "正在重新探测…";
+    if (!latest) return "等待首次探测结果。";
+    var timing = latest.timing;
+    if (timing.source === "clock") {
+      return "浏览器没有留下 Resource Timing 条目（请求可能被拦截或未产生网络事件），本次延迟回退为 performance.now() 计时。";
+    }
+    if (!timing.detailed) {
+      return "总耗时来自 Resource Timing API（浏览器实测网络耗时）；该跨域资源未返回 Timing-Allow-Origin，浏览器已把 DNS / 连接 / TLS / TTFB 等分阶段字段清零，服务端加上 Timing-Allow-Origin: * 后即可显示。";
+    }
+    return "全部数据来自 Resource Timing API（服务端已允许 Timing-Allow-Origin，分阶段耗时可直接读取）。";
+  }
+
+  function paint() {
+    var timing = latest ? latest.timing : null;
+    set("dtTotal", timing ? (timing.duration > 0 ? timing.duration + " ms" : "0 ms（缓存命中）") : "—");
+    set("dtTtfb", timing ? ms(timing.ttfb) : "—");
+    set("dtDns", timing ? ms(timing.dns) : "—");
+    set("dtTcp", timing ? ms(timing.connect) : "—");
+    set("dtTls", timing ? ms(timing.tls) : "—");
+    set("dtDownload", timing ? ms(timing.download) : "—");
+    set("dtSize", timing ? sizeText(timing) : "—");
+    set("dtProto", timing ? protoText(latest) : "—");
+    set("dtNote", noteText());
+  }
+
+  document.addEventListener("monitor:select", function (event) {
+    currentId = event.detail.serviceId;
+    latest = null;
+    probing = false;
+    paint();
+  });
+
+  document.addEventListener("monitor:busy", function (event) {
+    var ids = event.detail.ids;
+    for (var i = 0; i < ids.length; i++) {
+      if (ids[i] === currentId) {
+        probing = true;
+        paint();
+        return;
+      }
+    }
+  });
+
+  document.addEventListener("monitor:result", function (event) {
+    if (event.detail.serviceId !== currentId) return;
+    latest = event.detail;
+    probing = false;
+    paint();
+  });
+
+  paint();
+});
+</script>

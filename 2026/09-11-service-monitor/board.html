@@ -1,0 +1,125 @@
+<div id="svcBoard" class="svcmon-board svcmon-state-unknown d-flex flex-wrap justify-content-between align-items-center mb-3">
+  <div class="svcmon-left">
+    <div id="svcStateText" class="svcmon-state-text">检测中…</div>
+    <div class="svcmon-latency-line">
+      <span id="svcLatency" class="svcmon-latency">--</span>
+      <span class="svcmon-latency-unit">ms</span>
+    </div>
+    <div id="svcReason" class="svcmon-reason">正在准备…</div>
+  </div>
+  <div class="svcmon-right">
+    <div id="svcName" class="svcmon-name">—</div>
+    <div id="svcDesc" class="svcmon-desc">—</div>
+    <div class="svcmon-kv"><span class="svcmon-kv-key">地址</span><span id="svcUrl" class="svcmon-kv-val svcmon-mono">—</span></div>
+    <div class="svcmon-kv"><span class="svcmon-kv-key">HTTP</span><span id="svcHttp" class="svcmon-kv-val">—</span></div>
+    <div class="svcmon-kv"><span class="svcmon-kv-key">响应内容</span><span id="svcBody" class="svcmon-kv-val svcmon-mono">—</span></div>
+    <div class="svcmon-kv"><span class="svcmon-kv-key">最近检测</span><span id="svcTime" class="svcmon-kv-val">—</span></div>
+  </div>
+</div>
+
+<script type="module">
+import { SERVICES, DEFAULT_SERVICE_ID } from "./services.js";
+import { probeService } from "./service-probe.js";
+
+document.addEventListener("DOMContentLoaded", function () {
+  var board = document.getElementById("svcBoard");
+  var elState = document.getElementById("svcStateText");
+  var elLatency = document.getElementById("svcLatency");
+  var elReason = document.getElementById("svcReason");
+  var elName = document.getElementById("svcName");
+  var elDesc = document.getElementById("svcDesc");
+  var elUrl = document.getElementById("svcUrl");
+  var elHttp = document.getElementById("svcHttp");
+  var elBody = document.getElementById("svcBody");
+  var elTime = document.getElementById("svcTime");
+
+  var STATE_TEXT = { up: "运行正常", slow: "延迟偏高", degraded: "响应异常", down: "服务不可用" };
+
+  var results = {};
+  var currentId = DEFAULT_SERVICE_ID;
+  var busy = false;
+
+  function emit(name, detail) {
+    document.dispatchEvent(new CustomEvent(name, { detail: detail }));
+  }
+
+  function serviceById(id) {
+    for (var i = 0; i < SERVICES.length; i++) {
+      if (SERVICES[i].id === id) return SERVICES[i];
+    }
+    return null;
+  }
+
+  function httpText(result) {
+    if (result.opaque) return "不可读（no-cors）";
+    return result.httpStatus > 0 ? String(result.httpStatus) : "—";
+  }
+
+  function bodyText(result) {
+    if (result.bodyText) return result.bodyText;
+    return result.opaque ? "不可读（no-cors）" : "（空响应体）";
+  }
+
+  function paint() {
+    var service = serviceById(currentId);
+    if (!service) return;
+    var result = results[currentId];
+    var state = result ? result.state : "unknown";
+    var visual = busy && !result ? "busy" : state;
+
+    board.className =
+      "svcmon-board svcmon-state-" + visual + " d-flex flex-wrap justify-content-between align-items-center mb-3";
+
+    elName.textContent = service.name;
+    elDesc.textContent = service.desc ? service.desc : service.url;
+    elUrl.textContent = service.url;
+    elState.textContent = result ? STATE_TEXT[state] : busy ? "检测中…" : "未检测";
+    elLatency.textContent = result && result.latency > 0 ? String(result.latency) : "--";
+    elHttp.textContent = result ? httpText(result) : "—";
+    elBody.textContent = result ? bodyText(result) : "—";
+    elTime.textContent = result ? new Date(result.at).toLocaleTimeString("zh-CN", { hour12: false }) : "—";
+
+    var reason = result ? result.reason : "点击「刷新」开始探测";
+    if (busy && result) reason = reason + "（刷新中…）";
+    elReason.textContent = reason;
+  }
+
+  function runProbe(service) {
+    return probeService(service).then(function (result) {
+      results[service.id] = result;
+      if (service.id === currentId) paint();
+      emit("monitor:result", result);
+    });
+  }
+
+  function probeAll() {
+    if (busy) return;
+    busy = true;
+    var ids = [];
+    for (var i = 0; i < SERVICES.length; i++) ids.push(SERVICES[i].id);
+    emit("monitor:busy", { ids: ids });
+    paint();
+
+    var pending = [];
+    for (var j = 0; j < SERVICES.length; j++) pending.push(runProbe(SERVICES[j]));
+
+    Promise.all(pending).then(function () {
+      busy = false;
+      emit("monitor:idle", {});
+      paint();
+    });
+  }
+
+  document.addEventListener("monitor:select", function (event) {
+    currentId = event.detail.serviceId;
+    paint();
+  });
+
+  document.addEventListener("monitor:refresh", function () {
+    probeAll();
+  });
+
+  paint();
+  probeAll();
+});
+</script>

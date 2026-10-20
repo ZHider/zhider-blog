@@ -1,0 +1,188 @@
+<link rel="stylesheet" href="./cors-style.css" />
+
+<div class="cors-container container-fluid">
+  <div class="form-group">
+    <label for="targetUrl">目标 URL：</label>
+    <input
+      type="url"
+      class="form-control"
+      id="targetUrl"
+      placeholder="https://api.example.com/data"
+    />
+    <small class="form-text text-muted">
+      请输入完整的 URL，包括协议（http:// 或 https://）
+    </small>
+  </div>
+
+  <div class="form-group">
+    <label for="requestMethod">请求方法：</label>
+    <select class="custom-select" id="requestMethod">
+      <option value="HEAD" selected>HEAD（推荐，无副作用）</option>
+      <option value="GET">GET（获取响应体）</option>
+      <option value="OPTIONS">OPTIONS（预检请求）</option>
+    </select>
+    <small class="form-text text-muted">
+      HEAD 方法仅获取响应头，不获取响应体，适合大多数检测场景
+    </small>
+  </div>
+
+  <div class="mb-3">
+    <input type="checkbox" id="forcePreflight" />
+    <label for="forcePreflight">
+      强制触发预检请求（添加自定义头 X-CORS-Test，使请求变为"非简单请求"）
+    </label>
+    <small class="form-text text-muted d-block">
+      勾选后将发送自定义请求头，浏览器会先发送 OPTIONS 预检请求
+    </small>
+  </div>
+
+  <div class="mb-3">
+    <button id="testBtn" class="btn btn-primary btn-lg">检测 CORS</button>
+  </div>
+
+  <!-- 简单提示消息 -->
+  <div id="simpleAlert" class="result-section" style="display: hidden;">
+    <div class="alert" role="alert"></div>
+  </div>
+
+  <!-- 检测结果区域 -->
+  <div id="resultSection" class="result-section" style="display: none">
+    <!-- 加载提示 -->
+    <div id="loadingAlert" class="alert alert-info" style="display: none">
+      正在检测，请稍候...
+    </div>
+
+    <!-- 成功提示 -->
+    <div id="successAlert" class="alert alert-success" style="display: none">
+      <strong>✓ 请求成功！</strong> CORS 策略允许当前源访问该 URL。
+    </div>
+
+    <!-- 无 CORS 头警告 -->
+    <div
+      id="noCorsHeadersAlert"
+      class="alert alert-warning"
+      style="display: none"
+    >
+      <strong>注意：</strong> 响应中没有包含 CORS 相关的头信息。
+      这可能是因为服务器没有设置这些头，或者它们没有被暴露给前端。
+    </div>
+
+    <!-- HTTP 状态卡片 -->
+    <div id="httpStatusCard" class="card mb-3" style="display: none">
+      <div class="card-header"><strong>HTTP 状态</strong></div>
+      <div class="card-body">
+        <p class="m-0"><strong>状态码：</strong> <span data-ref="statusText"></span></p>
+      </div>
+    </div>
+
+    <!-- CORS 相关响应头卡片 -->
+    <div id="corsHeadersCard" class="card mb-3" style="display: none">
+      <div class="card-header"><strong>CORS 相关响应头</strong></div>
+      <div class="card-body" data-ref="body"></div>
+    </div>
+
+    <!-- 所有响应头卡片 -->
+    <div id="allHeadersCard" class="card mb-3" style="display: none">
+      <div class="card-header"><strong>所有响应头</strong></div>
+      <div class="card-body" data-ref="body"></div>
+    </div>
+
+    <!-- 错误详情块 -->
+    <div id="errorDetail" style="display: none">
+      <div class="alert alert-danger">
+        <strong>✗ 请求失败</strong>
+        <div data-ref="errorContent">
+          <!-- 错误类型内容通过 display 切换 -->
+          <div data-error-type="timeout" style="display: none">
+            <p><strong>错误类型：</strong>请求超时</p>
+            <p>服务器在 5 秒内没有响应。可能的原因：</p>
+            <ul>
+              <li>服务器响应缓慢</li>
+              <li>网络连接问题</li>
+              <li>服务器不允许当前请求方法</li>
+            </ul>
+          </div>
+          <div data-error-type="cors" style="display: none">
+            <p><strong>错误类型：</strong>CORS 策略阻止</p>
+            <p>
+              浏览器因为缺少
+              <code>Access-Control-Allow-Origin</code>
+              响应头或该头的值不匹配而拦截了请求。
+            </p>
+            <p class="mb-0">
+              <strong>重要提示：</strong>由于浏览器安全限制，当 CORS
+              失败时无法获取服务器返回的具体 CORS 头信息。
+            </p>
+          </div>
+          <div data-error-type="network" style="display: none">
+            <p><strong>错误类型：</strong>网络层错误</p>
+            <p>这不是 CORS 问题，而是网络层面的错误。可能的原因：</p>
+            <ul>
+              <li>DNS 解析失败（域名不存在）</li>
+              <li>连接被拒绝（服务器未运行）</li>
+              <li>SSL/TLS 证书错误</li>
+              <li>网络连接中断</li>
+            </ul>
+          </div>
+          <div data-error-type="cors_or_network" style="display: none">
+            <p><strong>错误类型：</strong>请求被阻止（CORS 或网络错误）</p>
+            <p>浏览器拦截了请求，可能是以下原因之一：</p>
+            <ul>
+              <li>
+                <strong>CORS 策略阻止：</strong>服务器没有返回正确的
+                <code>Access-Control-Allow-Origin</code> 响应头
+              </li>
+              <li>
+                <strong>预检请求失败：</strong>对于非简单请求，OPTIONS
+                预检请求未通过
+              </li>
+              <li>
+                <strong>网络层错误：</strong>DNS 失败、连接拒绝、证书错误等
+              </li>
+            </ul>
+            <p class="mb-0">
+              <strong>重要提示：</strong
+              >由于浏览器安全限制，无法获取详细的错误信息。请打开浏览器开发者工具的
+              <strong>Network</strong> 面板查看完整的请求细节和错误信息。
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header"><strong>错误详情</strong></div>
+        <div class="card-body">
+          <p><strong>错误名称：</strong> <span data-ref="errorName"></span></p>
+          <p>
+            <strong>错误消息：</strong> <span data-ref="errorMessage"></span>
+          </p>
+          <p class="mb-0">
+            <strong>原始消息：</strong> <span data-ref="errorOriginal"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 调试建议 -->
+    <div id="debugSuggest" class="alert alert-info" style="display: none">
+      <strong>调试建议：</strong>
+      <ol class="mb-0">
+        <li>按 <kbd>F12</kbd> 打开浏览器开发者工具</li>
+        <li>切换到 <strong>Network</strong>（网络）面板</li>
+        <li>重新执行检测，查看失败的请求</li>
+        <li>点击请求查看详细信息，包括请求头、响应头和错误消息</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 模板：响应头条目（隐藏，供 JS 克隆） -->
+  <div id="headerItemTmpl" style="display: none">
+    <div class="header-item">
+      <span class="header-name"></span>
+      <span class="header-value"></span>
+    </div>
+  </div>
+</div>
+
+<script src="./cors-test.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>

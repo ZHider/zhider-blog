@@ -1,0 +1,62 @@
+<div id="svcSwitcher" class="svcmon-switch btn-group flex-wrap mb-3" role="group" aria-label="服务切换"></div>
+
+<script type="module">
+import { SERVICES, DEFAULT_SERVICE_ID } from "./services.js";
+
+document.addEventListener("DOMContentLoaded", function () {
+  var wrap = document.getElementById("svcSwitcher");
+  var dots = {};
+  var currentId = DEFAULT_SERVICE_ID;
+
+  function emit(name, detail) {
+    document.dispatchEvent(new CustomEvent(name, { detail: detail }));
+  }
+
+  function setDot(id, state) {
+    if (dots[id]) dots[id].className = "svcmon-dot svcmon-dot-" + state;
+  }
+
+  function markActive(id) {
+    var buttons = wrap.querySelectorAll(".svcmon-switch-btn");
+    for (var i = 0; i < buttons.length; i++) {
+      if (buttons[i].getAttribute("data-service") === id) buttons[i].classList.add("active");
+      else buttons[i].classList.remove("active");
+    }
+  }
+
+  for (var i = 0; i < SERVICES.length; i++) {
+    (function (service) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "btn btn-outline-primary svcmon-switch-btn";
+      btn.setAttribute("data-service", service.id);
+      if (service.desc) btn.title = service.desc;
+
+      var dot = document.createElement("span");
+      dot.className = "svcmon-dot svcmon-dot-unknown";
+
+      btn.appendChild(dot);
+      btn.appendChild(document.createTextNode(service.name));
+      btn.addEventListener("click", function () {
+        currentId = service.id;
+        markActive(currentId);
+        emit("monitor:select", { serviceId: currentId });
+      });
+
+      dots[service.id] = dot;
+      wrap.appendChild(btn);
+    })(SERVICES[i]);
+  }
+
+  markActive(currentId);
+
+  document.addEventListener("monitor:busy", function (event) {
+    var ids = event.detail.ids;
+    for (var i = 0; i < ids.length; i++) setDot(ids[i], "busy");
+  });
+
+  document.addEventListener("monitor:result", function (event) {
+    setDot(event.detail.serviceId, event.detail.state);
+  });
+});
+</script>

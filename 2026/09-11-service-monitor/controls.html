@@ -1,0 +1,66 @@
+<div class="svcmon-controls d-flex flex-wrap align-items-center mb-3">
+  <button id="svcRefreshBtn" type="button" class="btn btn-primary btn-lg mr-3 mb-1">刷新</button>
+  <div class="d-flex align-items-center mb-1">
+    <input type="checkbox" id="svcAutoChk" class="mr-1">
+    <label for="svcAutoChk" class="mb-0 mr-2">自动刷新</label>
+    <select id="svcAutoInterval" class="custom-select custom-select-sm svcmon-interval">
+      <option value="10">10 秒</option>
+      <option value="30" selected>30 秒</option>
+      <option value="60">60 秒</option>
+      <option value="300">5 分钟</option>
+    </select>
+  </div>
+  <span id="svcAutoHint" class="text-muted small ml-3 mb-1"></span>
+</div>
+
+<script type="module">
+document.addEventListener("DOMContentLoaded", function () {
+  var btn = document.getElementById("svcRefreshBtn");
+  var chk = document.getElementById("svcAutoChk");
+  var sel = document.getElementById("svcAutoInterval");
+  var hint = document.getElementById("svcAutoHint");
+  var timer = null;
+
+  function emit(name, detail) {
+    document.dispatchEvent(new CustomEvent(name, { detail: detail }));
+  }
+
+  function tick() {
+    if (document.hidden) {
+      hint.textContent = "标签页未激活，已跳过本次自动刷新";
+      return;
+    }
+    hint.textContent = "";
+    emit("monitor:refresh", {});
+  }
+
+  function syncTimer() {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+    if (!chk.checked) {
+      hint.textContent = "";
+      return;
+    }
+    var seconds = parseInt(sel.value, 10);
+    timer = setInterval(tick, seconds * 1000);
+    hint.textContent = "每 " + seconds + " 秒自动探测一次（标签页在后台时跳过）";
+  }
+
+  btn.addEventListener("click", function () {
+    emit("monitor:refresh", {});
+  });
+  chk.addEventListener("change", syncTimer);
+  sel.addEventListener("change", syncTimer);
+
+  document.addEventListener("monitor:busy", function () {
+    btn.disabled = true;
+    btn.textContent = "探测中…";
+  });
+  document.addEventListener("monitor:idle", function () {
+    btn.disabled = false;
+    btn.textContent = "刷新";
+  });
+});
+</script>

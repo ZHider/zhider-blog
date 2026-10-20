@@ -1,0 +1,33 @@
+<div id="gallery" hidden>
+  <p class="mb-2">
+    <button id="obfBtn" class="btn btn-primary" disabled>🔀 混淆</button>
+    <button id="recBtn" class="btn btn-primary ml-2" disabled>↩ 恢复</button>
+  </p>
+
+  <div class="imgobs-panels">
+    <div class="imgobs-card">
+      <strong class="imgobs-title">原图</strong>
+      <canvas id="origCanvas" class="imgobs-canvas"></canvas>
+      <div class="imgobs-info" id="origInfo"></div>
+    </div>
+    <div class="imgobs-card">
+      <strong class="imgobs-title">混淆结果</strong>
+      <canvas id="obfCanvas" class="imgobs-canvas"></canvas>
+      <div class="imgobs-info" id="obfInfo"></div>
+      <button id="dlObfBtn" class="btn btn-success btn-sm mt-2" disabled>⬇ 下载 Q=60 JPG</button>
+    </div>
+    <div class="imgobs-card">
+      <strong class="imgobs-title">恢复结果</strong>
+      <canvas id="recCanvas" class="imgobs-canvas"></canvas>
+      <div class="imgobs-info" id="recInfo"></div>
+      <button id="dlRecBtn" class="btn btn-success btn-sm mt-2" disabled>⬇ 下载 Q=85 JPG</button>
+    </div>
+  </div>
+</div>
+
+<div id="status" class="imgobs-info mb-4"></div>
+
+<script type="module">
+import { initGallery } from './imgobs.js';
+document.addEventListener('DOMContentLoaded', initGallery);
+</script>

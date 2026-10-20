@@ -1,0 +1,10 @@
+<div id="dropZone" class="imgobs-dropzone mb-2">
+  <div class="h2 mb-2">⬆</div>
+  拖拽图片到此处，或点击选择文件
+  <input type="file" id="fileInput" accept="image/*" hidden>
+</div>
+
+<script type="module">
+import { initUpload } from './imgobs.js';
+document.addEventListener('DOMContentLoaded', initUpload);
+</script>
